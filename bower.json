@@ -1,0 +1,27 @@
+{
+  "name": "firstExpress",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Krit <kritcg@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Materialize": "materialize#~0.97.4",
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-loader": "~1.4.8",
+    "angular-mocks": "~1.4.8",
+    "html5-boilerplate": "~5.2.0"
+  }
+}
