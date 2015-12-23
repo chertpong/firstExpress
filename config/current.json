@@ -1,0 +1,12 @@
+{
+  "mode":"production",
+  "db_config": {
+    "host": "localhost",
+    "database": "krit_express",
+    "user": "root",
+    "password": "",
+    "connectionLimit":10
+  }
+}
+
+

@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
+var config = require('./config/current.json');
+var mysql = require('mysql');
+var pool = mysql.createPool(config.db_config);
 
 var routes = require('./routes/index');
 
@@ -29,7 +32,13 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+var dbPool = function(req,res,next){
+  req.pool= pool;
+  next();
+};
+
+//add middleware
+app.use('/', dbPool,routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,7 +51,8 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if (config.mode === 'development') {
+  console.log("Now on DEVELOPMENT MODE")
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -51,16 +61,20 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
+else{
+  console.log("NO STACKTRACES MODE");
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: {}
+    });
   });
-});
+}
+
+
 
 
 module.exports = app;
